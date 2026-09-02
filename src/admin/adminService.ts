@@ -1,0 +1,3 @@
+import { supabase } from '../lib/supabase';
+export type AdminMetrics={users:number;activeUsers:number;newUsers:number;retention7d:number;aiUsage:number;voiceUsage:number;habitsCreated:number;objectivesCreated:number;objectivesCompleted:number;reminders:number;errors:number;subscriptions:number;cancelledSubscriptions:number;storageBytes:number;freeUsers:number;premiumUsers:number;topFeatures:{event:string;count:number}[]};
+export async function getAdminMetrics(){ if(!supabase) throw new Error('Supabase no está configurado.'); const {data,error}=await supabase.rpc('admin_metrics'); if(error) throw error; return data as AdminMetrics; }

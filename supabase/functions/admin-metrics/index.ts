@@ -1,0 +1,2 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+Deno.serve(async req=>{const auth=req.headers.get('Authorization')??'';const c=createClient(Deno.env.get('SUPABASE_URL')!,Deno.env.get('SUPABASE_ANON_KEY')!,{global:{headers:{Authorization:auth}}});const {data,error}=await c.rpc('admin_metrics');if(error)return new Response(JSON.stringify({error:error.message}),{status:403});return new Response(JSON.stringify(data),{headers:{'Content-Type':'application/json'}})});

@@ -1,0 +1,3 @@
+import {supabase} from './lib/supabase';
+export async function exportCloudData(){if(!supabase) throw new Error('Supabase no configurado');const {data,error}=await supabase.functions.invoke('account-export');if(error)throw error;const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`impulse-cloud-export-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+export async function deleteCloudAccount(){if(!supabase) throw new Error('Supabase no configurado');const {error}=await supabase.functions.invoke('account-delete');if(error)throw error;await supabase.auth.signOut();}
